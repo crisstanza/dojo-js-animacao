@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html>
@@ -22,76 +23,103 @@
 		}
 		</style>
 		<script type="text/javascript">
-			 window.onload = function(){
-			 	var loader = new Array ();
-			 	loader[0] = new Array ();
-			 	loader[1] = new Array ();
-			 	loader[2] = new Array ();
-			 	loader[0][0] = document.getElementById('meuCanvas1_1');
-			 	loader[0][1] = document.getElementById('meuCanvas1_2');
-			 	loader[0][2] = document.getElementById('meuCanvas1_3');
-			 	loader[1][0] = document.getElementById('meuCanvas2_1');
-			 	loader[1][1] = document.getElementById('meuCanvas2_2');
-			 	loader[1][2] = document.getElementById('meuCanvas2_3');
-			 	loader[2][0] = document.getElementById('meuCanvas3_1');
-			 	loader[2][1] = document.getElementById('meuCanvas3_2');
-			 	loader[2][2] = document.getElementById('meuCanvas3_3');
-			 	loader[0][0].style.left = '0';
-			 	loader[0][0].style.top = '0';
-			 	loader[0][1].style.left = '110px';
-				loader[0][1].style.top = '0';
-			 	loader[0][2].style.left = '220px';
-				loader[0][2].style.top = '0';
+			var e,cnt,mov;
+			var old_pos_x = 0;
+			var old_pos_y = 0;
+			var tmp_pos_x = 0;
+			var tmp_pos_y = 0;
+			window.onload = function(){
+				initLoader();
+				doMove();
+			}
 
-			 	loader[1][0].style.left = '0';
-				loader[1][0].style.top = '110px';
-			 	loader[1][1].style.left = '111px';
-				loader[1][1].style.top = '110px';
-			 	loader[1][2].style.left = '220px';
-				loader[1][2].style.top = '110px';
+			function initLoader() {
+				absoluteMove(document.getElementById('loader_0'),0,110);
+				absoluteMove(document.getElementById('loader_1'),0,220);
+				absoluteMove(document.getElementById('loader_2'),110,220);
+				absoluteMove(document.getElementById('loader_3'),220,220);
+				absoluteMove(document.getElementById('loader_4'),220,110);
+				absoluteMove(document.getElementById('loader_5'),220,0);
+				absoluteMove(document.getElementById('loader_6'),110,0);
+				absoluteMove(document.getElementById('loader_7'),110,110);				
+			}
+			
+			
+			function doMove() {
+				if (e == null) {
+					e = nextElemet();
+					storePosition(e);
+					mov=10;
+				} else if (checkEndMove(e)) {
+					e = nextElemet();
+					old_pos_x = tmp_pos_x;
+					old_pos_y = tmp_pos_y;
+					storePosition(e);
 
-			 	loader[2][0].style.left = '0';
-				loader[2][0].style.top = '220px';
-			 	loader[2][1].style.left = '110px';
-				loader[2][1].style.top = '220px';
-			 	loader[2][2].style.left = '220px';
-				loader[2][2].style.top = '220px';
-			 	doMove();
+				}
+				
+				if (old_pos_x == tmp_pos_x) {
+					console.log(old_pos_x +' > ' + tmp_pos_x);
+					if (old_pos_y > tmp_pos_y) {
+						relativeMove(e, 0, -10);
+					} else {
+						relativeMove(e, 0, 10) ;				
+					}				
+				} else {
+					if (old_pos_x > tmp_pos_x) {
+						console.log('Y>');
+						relativeMove(e, -10, 0);
+					} else {
+						console.log('Y');
+						relativeMove(e, 10, 0) ;				
+					}
+				}
+				setTimeout(doMove,10);
 			 }
 			
-			 function doMove() {
-			 	var e = document.getElementById('meuCanvas2_1');
-			 	e.style.position = 'absolute';
-			 	console.log (e.style.top);
-
-				if (parseInt(e.style.top, 10) > 0 ) {
-					doMoveTop(e,10);					
+			 function nextElemet () {
+				if (cnt == null || cnt >=6) {
+					cnt = 0;
+				} else {
+					cnt = cnt + 1;	
 				}
-
-
-				setTimeout(doMove,1000);
+				return document.getElementById('loader_' + cnt);
 			 }
 
-			 function doMoveTop (item, pass) {
-			 	item.style.top = parseInt(item.style.top, 10) - pass + "px";
+			 function storePosition(item, x, y) {			
+				tmp_pos_x = parseInt(item.style.left, 10);
+				tmp_pos_y = parseInt(item.style.top, 10);
 			 }
-
-			 function doMoveLeft (item, pass) {
-			 	item.style.left = parseInt(item.style.left, 10) - pass + "px";
+			 
+			 function absoluteMove(item, x, y) {			
+				item.style.left = x + "px";
+				item.style.top = y + "px";
+			 }
+			 
+			 function relativeMove(item, x, y) {			
+				item.style.left = parseInt(item.style.left, 10) - x + "px";
+				item.style.top = parseInt(item.style.top, 10) - y + "px";
+			 }
+			 
+			 function checkEndMove (item) {
+				if (parseInt(item.style.left, 10) == old_pos_x && parseInt(item.style.top, 10) == old_pos_y ) {
+					return true;
+				}
+				return false;			
 			 }
 		</script>
 	</head>
 	<body bgcolor="red">
 		<div class="line">
-			<div class="bckGndNone" id="meuCanvas1_1"></div>
-			<div class="bckGndBlue" id="meuCanvas1_2"></div>
-			<div class="bckGndBlue" id="meuCanvas1_3"></div>
-			<div class="bckGndBlue" id="meuCanvas2_1"></div>
-			<div class="bckGndBlue" id="meuCanvas2_2"></div>
-			<div class="bckGndBlue" id="meuCanvas2_3"></div>
-			<div class="bckGndBlue" id="meuCanvas3_1"></div>
-			<div class="bckGndBlue" id="meuCanvas3_2"></div>
-			<div class="bckGndBlue" id="meuCanvas3_3"></div>
+			<div class="bckGndNone" id="loader_7"></div>
+			<div class="bckGndBlue" id="loader_6"></div>
+			<div class="bckGndBlue" id="loader_5"></div>
+			<div class="bckGndBlue" id="loader_0"></div>
+		
+			<div class="bckGndBlue" id="loader_4"></div>
+			<div class="bckGndBlue" id="loader_1"></div>
+			<div class="bckGndBlue" id="loader_2"></div>
+			<div class="bckGndBlue" id="loader_3"></div>
 		</div>
 	</body>
 </html>
