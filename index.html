@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<style type="text/css">
+		.bckGndNone {
+			background-color: green;
+		    height: 100px;
+		    width: 100px;
+		    margin: 10px;
+		    position: absolute;
+		}
+		.bckGndBlue {
+			background-color: blue;
+		    height: 100px;
+		    width: 100px;
+		    margin: 10px;
+		    position: absolute;
+		}
+		.line {
+		    width: 370px;		
+		}
+		</style>
+		<script type="text/javascript">
+			 window.onload = function(){
+			 	var loader = new Array ();
+			 	loader[0] = new Array ();
+			 	loader[1] = new Array ();
+			 	loader[2] = new Array ();
+			 	loader[0][0] = document.getElementById('meuCanvas1_1');
+			 	loader[0][1] = document.getElementById('meuCanvas1_2');
+			 	loader[0][2] = document.getElementById('meuCanvas1_3');
+			 	loader[1][0] = document.getElementById('meuCanvas2_1');
+			 	loader[1][1] = document.getElementById('meuCanvas2_2');
+			 	loader[1][2] = document.getElementById('meuCanvas2_3');
+			 	loader[2][0] = document.getElementById('meuCanvas3_1');
+			 	loader[2][1] = document.getElementById('meuCanvas3_2');
+			 	loader[2][2] = document.getElementById('meuCanvas3_3');
+			 	loader[0][0].style.left = '0';
+			 	loader[0][0].style.top = '0';
+			 	loader[0][1].style.left = '110px';
+				loader[0][1].style.top = '0';
+			 	loader[0][2].style.left = '220px';
+				loader[0][2].style.top = '0';
+
+			 	loader[1][0].style.left = '0';
+				loader[1][0].style.top = '110px';
+			 	loader[1][1].style.left = '111px';
+				loader[1][1].style.top = '110px';
+			 	loader[1][2].style.left = '220px';
+				loader[1][2].style.top = '110px';
+
+			 	loader[2][0].style.left = '0';
+				loader[2][0].style.top = '220px';
+			 	loader[2][1].style.left = '110px';
+				loader[2][1].style.top = '220px';
+			 	loader[2][2].style.left = '220px';
+				loader[2][2].style.top = '220px';
+			 	doMove();
+			 }
+			
+			 function doMove() {
+			 	var e = document.getElementById('meuCanvas2_1');
+			 	e.style.position = 'absolute';
+			 	console.log (e.style.top);
+
+				if (parseInt(e.style.top, 10) > 0 ) {
+					doMoveTop(e,10);					
+				}
+
+
+				setTimeout(doMove,1000);
+			 }
+
+			 function doMoveTop (item, pass) {
+			 	item.style.top = parseInt(item.style.top, 10) - pass + "px";
+			 }
+
+			 function doMoveLeft (item, pass) {
+			 	item.style.left = parseInt(item.style.left, 10) - pass + "px";
+			 }
+		</script>
+	</head>
+	<body bgcolor="red">
+		<div class="line">
+			<div class="bckGndNone" id="meuCanvas1_1"></div>
+			<div class="bckGndBlue" id="meuCanvas1_2"></div>
+			<div class="bckGndBlue" id="meuCanvas1_3"></div>
+			<div class="bckGndBlue" id="meuCanvas2_1"></div>
+			<div class="bckGndBlue" id="meuCanvas2_2"></div>
+			<div class="bckGndBlue" id="meuCanvas2_3"></div>
+			<div class="bckGndBlue" id="meuCanvas3_1"></div>
+			<div class="bckGndBlue" id="meuCanvas3_2"></div>
+			<div class="bckGndBlue" id="meuCanvas3_3"></div>
+		</div>
+	</body>
+</html>
